@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres_global
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Mfcd62!!Mfcd62!!
+    ports:
+      - "5432:5432"  # Expondo para acesso externo
+    networks:
+      - pg_network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  dbeaver:
+    image: dbeaver/cloudbeaver:latest
+    container_name: dbeaver_global
+    restart: always
+    ports:
+      - "8978:8978"  # Acesso externo via http://<IP>:8978
+    environment:
+      - CB_ADMIN_NAME=sumifitbr
+      - CB_ADMIN_PASSWORD=Last@1981
+    networks:
+      - pg_network
+    volumes:
+      - dbeaver_data:/opt/cloudbeaver/workspace
+
+networks:
+  pg_network:
+    name: pg_network
+    driver: bridge
+
+volumes:
+  postgres_data:
+  dbeaver_data:
